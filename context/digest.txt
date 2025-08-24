@@ -1,0 +1,1277 @@
+Directory structure:
+└── oujii-cctv-mobile/
+    ├── README.md
+    ├── CLAUDE.md
+    ├── eslint.config.mjs
+    ├── netlify.toml
+    ├── next.config.ts
+    ├── package.json
+    ├── postcss.config.mjs
+    ├── tsconfig.json
+    ├── app/
+    │   ├── globals.css
+    │   ├── layout.tsx
+    │   ├── page.tsx
+    │   ├── dashboard/
+    │   │   └── page.tsx
+    │   └── login/
+    │       └── page.tsx
+    ├── components/
+    │   └── CameraFeed.tsx
+    ├── context/
+    │   └── index.html
+    └── public/
+        └── manifest.json
+
+================================================
+FILE: README.md
+================================================
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
+================================================
+FILE: CLAUDE.md
+================================================
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+This is a Next.js 15.5.0 mobile application called "vigilance-mobile" built with React 19, TypeScript, and TailwindCSS. The project uses Turbopack for development and production builds.
+
+## Development Commands
+
+- `npm run dev` - Start development server with Turbopack
+- `npm run build` - Build production application with Turbopack  
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint for code quality
+
+## Architecture
+
+### Core Structure
+- **App Router**: Uses Next.js App Router pattern with `app/` directory
+- **Layout**: Single root layout in `app/layout.tsx` with Geist fonts
+- **Styling**: TailwindCSS 4.x with PostCSS configuration
+- **TypeScript**: Strict configuration with path aliasing (`@/*` maps to root)
+
+### Key Files
+- `app/layout.tsx` - Root layout with font loading and metadata
+- `app/page.tsx` - Homepage component
+- `app/globals.css` - Global styles
+- `next.config.ts` - Next.js configuration (minimal)
+- `tsconfig.json` - TypeScript configuration with strict mode
+
+### ESLint Configuration
+Uses flat config format with Next.js and TypeScript presets. Ignores build directories and generated files.
+
+## Technology Stack
+
+- **Framework**: Next.js 15.5.0 with App Router
+- **UI**: React 19.1.0
+- **Styling**: TailwindCSS 4.x with PostCSS
+- **Build Tool**: Turbopack
+- **Language**: TypeScript 5.x with strict mode
+- **Linting**: ESLint 9.x with Next.js presets
+- **Fonts**: Geist Sans and Geist Mono via next/font/google
+
+## Digital Props Goals (Film/TV)
+
+- Produce believable **fake UIs** for movie productions. 
+- **Offline + deterministic** playback for shoot day (no network, no time drift).
+- **Zero-friction handoff**: single URL (Netlify) and local fallback.
+
+## Context
+
+`context/*` is read-only. Do not modify. 
+- In this folder there will be files with describing names that you can use to get more context about the manuscript i.e. understand the scenes better so you can create better UI's. There will also be pure design inspiration there.
+
+
+## UI Components
+Rules:
+- Use Tailwind tokens (no inline styles). Keep variants minimal.
+- Ensure contrast and font size are readable on a monitor/camera.
+
+## Offline Requirements
+
+- Assume **airplane mode**.
+- No env secrets needed for playback.
+- Use static flags in `lib/scheduling/flags.ts` for feature gating.
+
+
+## Delivery
+
+- Preferred: Netlify deploy for remote review.
+- Local fallback: static export (`out/`) or standalone (`.next/standalone`) + `public/`.
+- Goal: team should click once and play.
+
+## Do Not Touch
+
+- Do not edit `context/*` sources or original `public/media/*` assets.
+- Do not change Tailwind tokens without explicit instruction.
+- Do not introduce runtime network dependencies for scene playback.
+
+
+
+================================================
+FILE: eslint.config.mjs
+================================================
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    ignores: [
+      "node_modules/**",
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+    ],
+  },
+];
+
+export default eslintConfig;
+
+
+
+================================================
+FILE: netlify.toml
+================================================
+[build]
+  publish = "out"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+
+================================================
+FILE: next.config.ts
+================================================
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  basePath: process.env.NODE_ENV === 'production' ? '' : '',
+  images: {
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.icons8.com',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+  },
+};
+
+export default nextConfig;
+
+
+
+================================================
+FILE: package.json
+================================================
+{
+  "name": "vigilance-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "next": "15.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.0",
+    "@eslint/eslintrc": "^3"
+  }
+}
+
+
+
+================================================
+FILE: postcss.config.mjs
+================================================
+const config = {
+  plugins: ["@tailwindcss/postcss"],
+};
+
+export default config;
+
+
+
+================================================
+FILE: tsconfig.json
+================================================
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+
+
+
+================================================
+FILE: app/globals.css
+================================================
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Custom scrollbar for a cleaner look */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+
+
+================================================
+FILE: app/layout.tsx
+================================================
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Vigilance Security",
+  description: "Professional home security monitoring system",
+  manifest: "/manifest.json",
+  themeColor: "#101828",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+  icons: {
+    icon: [
+      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512x512.png", sizes: "512x512", type: "image/png" }
+    ],
+    apple: [
+      { url: "/icon-152x152.png", sizes: "152x152", type: "image/png" }
+    ]
+  },
+  appleWebApp: {
+    capable: true,
+    title: "Vigilance Security",
+    statusBarStyle: "black-translucent"
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent"
+  }
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body
+        className={`${inter.variable} font-inter antialiased`}
+      >
+        {children}
+      </body>
+    </html>
+  );
+}
+
+
+
+================================================
+FILE: app/page.tsx
+================================================
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is authenticated
+    const isAuthenticated = localStorage.getItem('vigilance-auth');
+    
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    } else {
+      router.push('/login');
+    }
+  }, [router]);
+
+  return (
+    <div className="bg-gray-800 min-h-screen flex items-center justify-center">
+      <div className="text-white">Redirecting...</div>
+    </div>
+  );
+}
+
+
+
+================================================
+FILE: app/dashboard/page.tsx
+================================================
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import CameraFeed from '@/components/CameraFeed';
+
+export default function Dashboard() {
+  const [currentUser, setCurrentUser] = useState('');
+  const [activeTab, setActiveTab] = useState('Security');
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check if user is authenticated
+    const isAuthenticated = localStorage.getItem('vigilance-auth');
+    const username = localStorage.getItem('vigilance-user');
+    
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+
+    setCurrentUser(username || 'User');
+  }, [router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('vigilance-auth');
+    localStorage.removeItem('vigilance-user');
+    router.push('/login');
+  };
+
+  if (!currentUser) {
+    return <div className="bg-gray-800 min-h-screen flex items-center justify-center">
+      <div className="text-white">Loading...</div>
+    </div>;
+  }
+
+  // Mock camera data - in real app this would come from API
+  const cameras = [
+    { id: '1', name: 'Garage side S3 Pro 2', model: 'S3 Pro 2', isActive: true, placeholder: 'Garage+Feed' },
+    { id: '2', name: 'Back yard S3 Pro 1', model: 'S3 Pro 1', isActive: true, placeholder: 'Backyard+Feed' },
+  ];
+
+  // Total camera stats to match reference design
+  const totalCameras = 14;
+  const activeCameras = 8;
+
+  const tabs = ['Favorites', 'Security', 'Care', 'Lights'];
+  const bottomNavItems = [
+    { name: 'Home', icon: '/ic_baseline-home.png', active: true },
+    { name: 'Events', icon: '/mage_dashboard-fill.png' },
+    { name: 'Services', icon: '/bxs_user.png' },
+    { name: 'Settings', icon: '/mdi_cog.png' }
+  ];
+
+  return (
+    <div className="bg-[#101828] text-white min-h-screen flex flex-col">
+
+        {/* App Header */}
+        <header className="px-4 pt-4 pb-4">
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <button 
+              onClick={handleLogout}
+              className="flex items-center hover:opacity-80 transition-opacity"
+            >
+              <Image 
+                src="/logoi.png" 
+                alt="VIGILANCE" 
+                width={120} 
+                height={24} 
+              />
+            </button>
+
+            <div className="flex items-center space-x-4">
+              {/* Bell Icon */}
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-5-5.917V5a1 1 0 00-2 0v.083A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              {/* Plus Icon */}
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content Area */}
+        <main className="flex-grow overflow-y-auto no-scrollbar px-4">
+          {/* Navigation Tabs */}
+          <nav className="flex space-x-6 border-b border-gray-700 mb-4">
+            {tabs.map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`py-2 ${
+                  activeTab === tab
+                    ? 'text-white border-b-2 border-blue-500 font-semibold'
+                    : 'text-gray-400'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </nav>
+
+          {/* Signed In User Bar */}
+          <div className="flex justify-between items-center bg-[#1D2939] rounded-lg p-2 mb-4">
+            <div className="flex items-center space-x-3">
+              <Image 
+                src="/homename.png" 
+                alt="Home" 
+                width={32} 
+                height={32} 
+                className="rounded-full" 
+              />
+              <div className="flex items-center space-x-1">
+                <h2 className="text-sm font-semibold">Wander001 home</h2>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* System Status Dashboard */}
+          <div className="bg-[#1D2939] rounded-2xl p-4 mb-4">
+            <div className="flex justify-around text-center mb-4 border-b border-gray-700 pb-4">
+              <div>
+                <p className="text-lg font-semibold text-white">
+                  {activeCameras} <span className="text-sm text-gray-400">/ {totalCameras}</span>
+                </p>
+                <p className="text-xs text-gray-400">Active Cameras</p>
+              </div>
+              <div>
+                <p className="text-lg font-semibold text-white">99.8%</p>
+                <p className="text-xs text-gray-400">System Health</p>
+              </div>
+              <div>
+                <p className="text-lg font-semibold text-white">85%</p>
+                <p className="text-xs text-gray-400">Storage</p>
+              </div>
+            </div>
+            
+            {/* User Status Section */}
+            <div className="space-y-2">
+              {/* Active User "Adam" */}
+              <div className="flex items-center justify-between bg-gray-700/50 p-2 rounded-lg">
+                <div className="flex items-center">
+                  <Image 
+                    src="/user.png" 
+                    alt="Adam's avatar" 
+                    width={32} 
+                    height={32} 
+                    className="mr-3" 
+                  />
+                  <div>
+                    <span className="font-medium">Adam</span>
+                    <span className="text-xs text-gray-400 ml-1">(You)</span>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <span className="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
+                  <span className="text-xs text-green-400">Online</span>
+                </div>
+              </div>
+              {/* Offline User "Carl" */}
+              <div className="flex items-center justify-between bg-gray-700/50 p-2 rounded-lg">
+                <div className="flex items-center">
+                  <Image 
+                    src="/user.png" 
+                    alt="Carl's avatar" 
+                    width={32} 
+                    height={32} 
+                    className="mr-3 opacity-50" 
+                  />
+                  <div>
+                    <span className="font-medium text-gray-400">Carl</span>
+                    <span className="text-xs text-gray-500 ml-1">(Admin)</span>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <Image 
+                    src="/offline.png" 
+                    alt="Offline" 
+                    width={8} 
+                    height={8} 
+                    className="w-2.5 h-2.5 mr-2"
+                  />
+                  <span className="text-xs text-gray-400">Offline</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Camera Feeds */}
+          {cameras.map((camera) => (
+            <CameraFeed
+              key={camera.id}
+              id={camera.id}
+              name={camera.name}
+              model={camera.model}
+              isActive={camera.isActive}
+              placeholder={camera.placeholder}
+              showControls={true}
+            />
+          ))}
+        </main>
+
+        {/* Bottom Navigation Bar */}
+        <footer className="bg-[#1D2939] px-4 py-2 pb-8 sticky bottom-0">
+          <div className="flex justify-around items-center text-gray-400">
+            {bottomNavItems.map((item) => (
+              <a
+                key={item.name}
+                href="#"
+                className={`flex items-center justify-center py-1 ${item.active ? 'text-blue-500' : ''}`}
+              >
+                <Image 
+                  src={item.icon} 
+                  alt={item.name}
+                  width={28} 
+                  height={28} 
+                  className={`mx-auto ${item.active ? 'brightness-0 invert sepia saturate-200 hue-rotate-180' : 'opacity-60 brightness-0 invert'}`}
+                />
+              </a>
+            ))}
+          </div>
+        </footer>
+    </div>
+  );
+}
+
+
+================================================
+FILE: app/login/page.tsx
+================================================
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+
+export default function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [showInviteMessage, setShowInviteMessage] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Simulate coming from an invite link
+    const timer = setTimeout(() => {
+      setShowInviteMessage(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+
+  const handleQuickLogin = async () => {
+    setIsLoading(true);
+    
+    // Quick login with saved credentials
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    localStorage.setItem('vigilance-auth', 'true');
+    localStorage.setItem('vigilance-user', 'Adam');
+    router.push('/dashboard');
+  };
+
+  if (showInviteMessage) {
+    return (
+      <div className="bg-[#101828] text-white min-h-screen flex flex-col items-center justify-center px-4">
+        <div className="text-center space-y-4">
+          <Image 
+            src="/logoi.png" 
+            alt="VIGILANCE" 
+            width={160} 
+            height={32} 
+            className="mx-auto mb-6" 
+          />
+          <div className="bg-[#1D2939] rounded-2xl p-6 max-w-sm">
+            <h2 className="text-lg font-semibold mb-2">You&apos;re Invited!</h2>
+            <p className="text-gray-300 text-sm mb-4">
+              Carl has invited you to access the Wander001 home security system.
+            </p>
+            <div className="flex items-center space-x-3 bg-gray-700/30 rounded-lg p-3">
+              <Image 
+                src="/user.png" 
+                alt="Adam" 
+                width={32} 
+                height={32} 
+              />
+              <div className="text-left">
+                <div className="font-medium">Adam</div>
+                <div className="text-xs text-gray-400">Invited User</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-[#101828] text-white min-h-screen flex flex-col">
+      {/* Main Content */}
+      <main className="flex-grow px-4 flex flex-col justify-center">
+        <div className="max-w-sm mx-auto w-full space-y-8">
+          
+          {/* Logo positioned between top and content */}
+          <div className="text-center">
+            <Image 
+              src="/logoi.png" 
+              alt="VIGILANCE" 
+              width={180} 
+              height={36} 
+              className="mx-auto mb-2" 
+            />
+            <p className="text-sm text-gray-400">Security System</p>
+          </div>
+          
+          {/* Saved Account */}
+          <div className="bg-[#1D2939] rounded-2xl p-4">
+            <div className="text-center mb-4">
+              <h2 className="text-lg font-semibold text-white mb-1">Sign In</h2>
+              <p className="text-gray-400 text-sm">Choose your account</p>
+            </div>
+            
+            <div className="flex items-center space-x-3 bg-gray-700/30 rounded-lg p-3 mb-4">
+              <Image 
+                src="/user.png" 
+                alt="Adam" 
+                width={40} 
+                height={40} 
+              />
+              <div className="flex-1 text-left">
+                <div className="font-medium text-white">Adam</div>
+                <div className="text-xs text-gray-400">Invited by Carl</div>
+              </div>
+              <div className="text-xs text-green-400">✓ Saved</div>
+            </div>
+            
+            <button
+              onClick={handleQuickLogin}
+              disabled={isLoading}
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center"
+            >
+              {isLoading ? (
+                <div className="flex items-center space-x-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  <span>Signing in...</span>
+                </div>
+              ) : (
+                'Continue as Adam'
+              )}
+            </button>
+          </div>
+
+          {/* Alternative Login */}
+          <div className="text-center">
+            <button 
+              onClick={() => {/* Show manual login form */}}
+              className="text-gray-400 text-sm hover:text-gray-300 transition-colors"
+            >
+              Sign in with different account
+            </button>
+          </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="px-4 py-4 text-center">
+        <p className="text-xs text-gray-500">Vigilance Security © 2025</p>
+      </footer>
+    </div>
+  );
+}
+
+
+================================================
+FILE: components/CameraFeed.tsx
+================================================
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+
+interface CameraFeedProps {
+  id: string;
+  name: string;
+  model?: string;
+  isActive?: boolean;
+  placeholder?: string;
+  showControls?: boolean;
+}
+
+export default function CameraFeed({
+  id,
+  name,
+  model,
+  isActive = true,
+  placeholder,
+  showControls = true
+}: CameraFeedProps) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [, setHasError] = useState(false);
+
+  // For future real video integration
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Simulate loading delay for placeholder
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000 + Math.random() * 2000); // Random delay 1-3s
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const getVideoSource = () => {
+    // Use real videos for camera feeds
+    const videos = ['/0823.mp4', '/0824.mp4'];
+    return videos[parseInt(id) % videos.length] || videos[0];
+  };
+
+  return (
+    <div className="relative rounded-2xl overflow-hidden mb-4 group">
+      {/* Loading State */}
+      {isLoading && (
+        <div className="w-full h-48 bg-gray-700 animate-pulse flex items-center justify-center">
+          <div className="text-gray-400 text-sm">Loading feed...</div>
+        </div>
+      )}
+
+      {/* Camera Feed */}
+      {!isLoading && (
+        <>
+          {/* Real video feeds */}
+          <video
+            ref={videoRef}
+            className={`w-full h-48 object-cover transition-opacity ${
+              isActive ? 'opacity-100' : 'opacity-50'
+            }`}
+            autoPlay
+            muted
+            loop
+            playsInline
+            src={getVideoSource()}
+            onError={() => setHasError(true)}
+          />
+
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+
+          {/* Feed Info */}
+          <div className="absolute bottom-3 left-3 text-white">
+            <h3 className="font-semibold text-sm">{name}</h3>
+            {model && (
+              <p className="text-xs text-gray-300 opacity-80">{model}</p>
+            )}
+            <div className="flex items-center space-x-2 text-xs text-gray-300 mt-1">
+              {/* Radio Waves Icon */}
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 512 512" 
+                fill="currentColor" 
+                className="w-3 h-3"
+              >
+                <circle cx="256" cy="256" r="48"/>
+                <path d="M158.6 353.4c-53.4-53.4-53.4-140.2 0-193.6l-30.2-30.2c-70 70-70 183.9 0 253.9l30.2-30.1zM353.4 353.4l30.2 30.2c70-70 70-183.9 0-253.9l-30.2 30.2c53.4 53.4 53.4 140.2 0 193.6zM107 405c-82.7-82.7-82.7-216.7 0-299.3L76.8 75.5c-99.5 99.5-99.5 260.5 0 360l30.2-30.5zM405 405c82.7-82.7 82.7-216.7 0-299.3l30.2-30.2c99.5 99.5 99.5 260.5 0 360L405 405z"/>
+              </svg>
+              
+              {/* Status Indicator */}
+              <div className="flex items-center space-x-1">
+                {isActive ? (
+                  <div className="h-1.5 w-1.5 rounded-full bg-green-400"></div>
+                ) : (
+                  <Image 
+                    src="/offline.png" 
+                    alt="Offline" 
+                    width={6} 
+                    height={6} 
+                    className="w-1.5 h-1.5"
+                  />
+                )}
+                <span className={`text-xs ${isActive ? 'text-white' : 'text-gray-400'}`}>{isActive ? 'Live' : 'Offline'}</span>
+              </div>
+
+              {/* Signal Strength - simulated */}
+              <div className="flex space-x-0.5">
+                {[1, 2, 3].map((bar) => (
+                  <div
+                    key={bar}
+                    className={`w-1 h-2 rounded-sm ${
+                      bar <= 2 ? 'bg-green-400' : 'bg-gray-500'
+                    }`}
+                  ></div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Controls */}
+          {showControls && (
+            <div className="absolute bottom-3 right-3 flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              {/* Record Button */}
+              <button className="bg-black/50 rounded-full h-8 w-8 flex items-center justify-center hover:bg-black/70 transition-colors">
+                <div className="h-3 w-3 bg-red-500 rounded-full animate-pulse"></div>
+              </button>
+              
+              {/* Alert Count */}
+              <button className="bg-black/50 rounded-full h-8 w-8 flex items-center justify-center font-semibold text-xs hover:bg-black/70 transition-colors">
+                0
+              </button>
+              
+              {/* More Options */}
+              <button className="bg-black/50 rounded-full h-8 w-8 flex items-center justify-center hover:bg-black/70 transition-colors">
+                <Image 
+                  src="https://img.icons8.com/?id=120374&format=png&size=16&color=FFFFFF" 
+                  alt="More options" 
+                  width={16} 
+                  height={16} 
+                />
+              </button>
+            </div>
+          )}
+
+          {/* Offline Overlay */}
+          {!isActive && (
+            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+              <div className="text-center">
+                <div className="text-red-400 text-sm font-semibold">OFFLINE</div>
+                <div className="text-gray-300 text-xs mt-1">Camera unavailable</div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+
+================================================
+FILE: context/index.html
+================================================
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigilance Security</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Apply Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for a cleaner look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-gray-800 flex items-center justify-center min-h-screen">
+
+    <!-- Phone Mockup Container -->
+    <div class="w-full max-w-sm h-[800px] bg-[#101828] text-white rounded-[40px] shadow-2xl overflow-hidden border-4 border-black flex flex-col">
+
+        <!-- App Header -->
+        <header class="px-4 pt-8 pb-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <span class="text-lg text-gray-400 tracking-widest">VIGILANCE</span>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <!-- Bell Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-5-5.917V5a1 1 0 00-2 0v.083A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    <!-- Plus Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow overflow-y-auto no-scrollbar px-4">
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-6 border-b border-gray-700 mb-4">
+                <button class="py-2 text-gray-400">Favorites</button>
+                <button class="py-2 text-white border-b-2 border-blue-500 font-semibold">Security</button>
+                <button class="py-2 text-gray-400">Care</button>
+                <button class="py-2 text-gray-400">Lights</button>
+            </nav>
+
+            <!-- Signed In User Bar -->
+            <div class="flex justify-between items-center bg-[#1D2939] rounded-lg p-2 mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                           <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                         </svg>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <h2 class="text-sm font-semibold">Wander001 home</h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Status Dashboard -->
+            <div class="bg-[#1D2939] rounded-2xl p-4 mb-4">
+                <div class="flex justify-around text-center mb-4 border-b border-gray-700 pb-4">
+                    <div>
+                        <p class="text-lg font-semibold text-white">8 <span class="text-sm text-gray-400">/ 14</span></p>
+                        <p class="text-xs text-gray-400">Active Cameras</p>
+                    </div>
+                    <div>
+                        <p class="text-lg font-semibold text-white">99.8%</p>
+                        <p class="text-xs text-gray-400">System Health</p>
+                    </div>
+                     <div>
+                        <p class="text-lg font-semibold text-white">85%</p>
+                        <p class="text-xs text-gray-400">Storage</p>
+                    </div>
+                </div>
+                
+                <!-- User Status Section -->
+                <div class="space-y-2">
+                    <!-- Active User "Adam" -->
+                     <div class="flex items-center justify-between bg-gray-700/50 p-2 rounded-lg">
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/40/475569/E2E8F0?text=A" alt="Adam's icon" class="w-8 h-8 rounded-full mr-3">
+                            <div>
+                                <span class="font-medium">Adam</span>
+                                <span class="text-xs text-gray-400">(You)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
+                            <span class="text-sm text-green-400">Online</span>
+                        </div>
+                    </div>
+                    <!-- Offline User "Carl" -->
+                    <div class="flex items-center justify-between bg-gray-700/50 p-2 rounded-lg">
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/40/475569/E2E8F0?text=C" alt="Carl's icon" class="w-8 h-8 rounded-full mr-3 opacity-50">
+                            <div>
+                                <span class="font-medium text-gray-400">Carl</span>
+                                <span class="text-xs text-gray-500">(Admin)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="h-2 w-2 bg-red-500 rounded-full mr-2"></span>
+                            <span class="text-sm text-red-400">Offline</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Camera Feed 1 -->
+            <div class="relative rounded-2xl overflow-hidden mb-4">
+                <img src="https://placehold.co/600x400/334155/E2E8F0?text=Garage+Feed" alt="Garage side camera feed" class="w-full h-48 object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-3 left-3 text-white">
+                    <h3 class="font-semibold">Garage side S3 Pro 2</h3>
+                    <div class="flex items-center space-x-2 text-xs text-gray-300 mt-1">
+                        <!-- Camera Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 001.553.832l3-2a1 1 0 000-1.664l-3-2z" />
+                        </svg>
+                        <!-- Wifi Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V9a1 1 0 011-1h14a1 1 0 01.707.293zM10 2a2.5 2.5 0 00-2.5 2.5V7a2.5 2.5 0 005 0V4.5A2.5 2.5 0 0010 2z" clip-rule="evenodd" />
+                        </svg>
+                         <!-- Brightness Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 14.95l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 001.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+                 <div class="absolute bottom-3 right-3 flex items-center space-x-1">
+                    <button class="bg-black/50 rounded-full h-8 w-8 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 01-9.201-4.42 5.5 5.5 0 0110.893 2.131A1.5 1.5 0 0115.312 11.424zM10 2a8 8 0 100 16 8 8 0 000-16z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button class="bg-black/50 rounded-full h-8 w-8 flex items-center justify-center font-semibold">0</button>
+                    <button class="bg-black/50 rounded-full h-8 w-8 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Camera Feed 2 -->
+            <div class="relative rounded-2xl overflow-hidden mb-4">
+                <img src="https://placehold.co/600x400/1E293B/94A3B8?text=Backyard+Feed" alt="Backyard camera feed" class="w-full h-48 object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-3 left-3 text-white">
+                    <h3 class="font-semibold">Back yard S3 Pro 1</h3>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation Bar -->
+        <footer class="bg-[#1D2939] rounded-t-2xl px-4 py-2">
+            <div class="flex justify-around items-center text-gray-400">
+                <a href="#" class="text-center text-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.707.707a1 1 0 001.414-1.414l-7-7z" /></svg>
+                    <span class="text-xs font-semibold">Home</span>
+                </a>
+                <a href="#" class="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 012-2h2a2 2 0 012 2v6m-8-12V7a2 2 0 012-2h4a2 2 0 012 2v2m-10 0h14M3 19h18" /></svg>
+                    <span class="text-xs">Events</span>
+                </a>
+                <a href="#" class="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    <span class="text-xs">Services</span>
+                </a>
+                <a href="#" class="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                    <span class="text-xs">Smart</span>
+                </a>
+                <a href="#" class="text-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span class="text-xs">Shop</span>
+                </a>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
+
+
+
+
+================================================
+FILE: public/manifest.json
+================================================
+{
+  "name": "Vigilance Security",
+  "short_name": "Vigilance",
+  "description": "Professional home security monitoring system",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101828",
+  "theme_color": "#101828",
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["security", "utilities"],
+  "icons": [
+    {
+      "src": "/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

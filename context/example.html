@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vigilance - Desktop</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Apply Inter font family */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0c121f;
+        }
+        /* Custom scrollbar for a cleaner look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <div class="flex h-screen bg-[#101828]">
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-[#1D2939] p-6 flex flex-col">
+            <!-- Logo -->
+            <div class="flex items-center mb-10">
+                <span class="text-xl text-gray-400 tracking-widest">VIGILANCE</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex flex-col space-y-2">
+                <a href="#" class="flex items-center space-x-3 text-white bg-blue-500/20 px-3 py-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                    <span class="font-semibold">Home</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-700/50 px-3 py-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 012-2h2a2 2 0 012 2v6m-8-12V7a2 2 0 012-2h4a2 2 0 012 2v2m-10 0h14M3 19h18" /></svg>
+                    <span>Events</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-700/50 px-3 py-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                    <span>Services</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-700/50 px-3 py-2 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                    <span>Smart</span>
+                </a>
+                 <a href="#" class="flex items-center space-x-3 text-gray-400 hover:bg-gray-700/50 px-3 py-2 rounded-lg">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <span>Shop</span>
+                </a>
+            </nav>
+            
+            <!-- User Status Section (in Sidebar) -->
+            <div class="mt-auto">
+                 <div class="space-y-3">
+                    <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Users Online</h3>
+                    <!-- Active User "Adam" -->
+                     <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/40/475569/E2E8F0?text=A" alt="Adam's icon" class="w-9 h-9 rounded-full mr-3">
+                            <div>
+                                <span class="font-medium text-sm">Adam</span>
+                                <span class="text-xs text-gray-400 block">(You)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="h-2 w-2 bg-green-500 rounded-full mr-2"></span>
+                            <span class="text-xs text-green-400">Online</span>
+                        </div>
+                    </div>
+                    <!-- Offline User "Carl" -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <img src="https://placehold.co/40/475569/E2E8F0?text=C" alt="Carl's icon" class="w-9 h-9 rounded-full mr-3 opacity-50">
+                            <div>
+                                <span class="font-medium text-sm text-gray-400">Carl</span>
+                                <span class="text-xs text-gray-500 block">(Admin)</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="h-2 w-2 bg-red-500 rounded-full mr-2"></span>
+                            <span class="text-xs text-red-400">Offline</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col">
+            <!-- Top Bar -->
+            <header class="bg-[#101828] p-4 flex justify-between items-center">
+                 <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                           <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                         </svg>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <h2 class="text-md font-semibold">Wander001 home</h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 rounded-full hover:bg-gray-700/50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-5-5.917V5a1 1 0 00-2 0v.083A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                    </button>
+                    <button class="p-2 rounded-full hover:bg-gray-700/50">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="flex-1 p-6 overflow-y-auto no-scrollbar">
+                <!-- Dashboard Stats -->
+                <div class="grid grid-cols-3 gap-6 mb-6">
+                    <div class="bg-[#1D2939] p-4 rounded-xl">
+                        <p class="text-xs text-gray-400">Active Cameras</p>
+                        <p class="text-2xl font-semibold text-white mt-1">8 <span class="text-lg text-gray-400">/ 14</span></p>
+                    </div>
+                    <div class="bg-[#1D2939] p-4 rounded-xl">
+                        <p class="text-xs text-gray-400">System Health</p>
+                        <p class="text-2xl font-semibold text-white mt-1">99.8%</p>
+                    </div>
+                    <div class="bg-[#1D2939] p-4 rounded-xl">
+                        <p class="text-xs text-gray-400">Storage</p>
+                        <p class="text-2xl font-semibold text-white mt-1">85%</p>
+                    </div>
+                </div>
+
+                <!-- Camera Feeds Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Camera Feed 1 -->
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <img src="https://placehold.co/800x600/334155/E2E8F0?text=Garage+Feed" alt="Garage side camera feed" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="font-semibold">Garage side S3 Pro 2</h3>
+                            <div class="flex items-center space-x-2 text-xs text-gray-300 mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 001.553.832l3-2a1 1 0 000-1.664l-3-2z" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V9a1 1 0 011-1h14a1 1 0 01.707.293zM10 2a2.5 2.5 0 00-2.5 2.5V7a2.5 2.5 0 005 0V4.5A2.5 2.5 0 0010 2z" clip-rule="evenodd" /></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 14.95l.707-.707a1 1 0 10-1.414-1.414l-.707.707a1 1 0 001.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 100 2h1z" clip-rule="evenodd" /></svg>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-4 right-4 flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="bg-black/50 rounded-full h-9 w-9 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M15.312 11.424a5.5 5.5 0 01-9.201-4.42 5.5 5.5 0 0110.893 2.131A1.5 1.5 0 0115.312 11.424zM10 2a8 8 0 100 16 8 8 0 000-16z" clip-rule="evenodd" /></svg></button>
+                            <button class="bg-black/50 rounded-full h-9 w-9 flex items-center justify-center font-semibold">0</button>
+                            <button class="bg-black/50 rounded-full h-9 w-9 flex items-center justify-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" /></svg></button>
+                        </div>
+                    </div>
+
+                    <!-- Camera Feed 2 -->
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <img src="https://placehold.co/800x600/1E293B/94A3B8?text=Backyard+Feed" alt="Backyard camera feed" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="font-semibold">Back yard S3 Pro 1</h3>
+                        </div>
+                    </div>
+                    
+                     <!-- Camera Feed 3 -->
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <img src="https://placehold.co/800x600/475569/94A3B8?text=Lobby" alt="Lobby camera feed" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="font-semibold">Lobby Cam 4</h3>
+                        </div>
+                    </div>
+                    
+                     <!-- Camera Feed 4 -->
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <img src="https://placehold.co/800x600/334155/94A3B8?text=Rooftop+East" alt="Rooftop East camera feed" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="font-semibold">Rooftop East</h3>
+                        </div>
+                    </div>
+                    
+                     <!-- Camera Feed 5 -->
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <img src="https://placehold.co/800x600/1E293B/94A3B8?text=Parking+Lot" alt="Parking Lot camera feed" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="font-semibold">Parking Lot A1</h3>
+                        </div>
+                    </div>
+                    
+                     <!-- Camera Feed 6 -->
+                    <div class="relative rounded-2xl overflow-hidden group">
+                        <img src="https://placehold.co/800x600/475569/94A3B8?text=Server+Room" alt="Server Room camera feed" class="w-full h-64 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="font-semibold">Server Room</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
+
