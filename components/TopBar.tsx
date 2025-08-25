@@ -1,14 +1,17 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useAppStore } from '@/lib/store';
+import PinModal from './PinModal';
 
 interface TopBarProps {
-  onLogout?: () => void;
   cameraCount: number;
 }
 
-export default function TopBar({ onLogout, cameraCount }: TopBarProps) {
+export default function TopBar({ cameraCount }: TopBarProps) {
+  const { setPower } = useAppStore();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [showShutdownModal, setShowShutdownModal] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   
   const currentTime = new Date().toLocaleTimeString('sv-SE', { 
@@ -38,14 +41,19 @@ export default function TopBar({ onLogout, cameraCount }: TopBarProps) {
 
   const handleLogout = () => {
     setShowUserDropdown(false);
-    onLogout?.();
+    setShowShutdownModal(true);
+  };
+
+  const handleShutdownConfirm = () => {
+    setShowShutdownModal(false);
+    setPower('OFF');
   };
 
   return (
     <>
       {/* Top Bar - Header */}
-      <div className="bg-[#101828] p-4 flex justify-between items-center">
-        <div className="flex items-center space-x-4">
+      <div className="bg-[#101828] px-4 py-2 flex justify-between items-center">
+        <div className="flex items-center space-x-8">
           {/* VIGILANCE Logo */}
           <div className="flex items-center">
             <img 
@@ -68,24 +76,42 @@ export default function TopBar({ onLogout, cameraCount }: TopBarProps) {
               VIGILANCE
             </span>
           </div>
+
+          {/* Navigation Tabs */}
+          <nav className="flex items-center space-x-1">
+            <button className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-blue-500/20 text-white border border-blue-500/30">
+              <img src="/homename.png" alt="Home" className="h-4 w-4" />
+              <span className="font-medium">Home</span>
+            </button>
+            <button className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-700/50 hover:text-white transition-colors">
+              <img src="/mage_dashboard-fill.png" alt="Live Feed" className="h-4 w-4" />
+              <span>Live Feed</span>
+            </button>
+            <button className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-700/50 hover:text-white transition-colors">
+              <img src="/bxs_user.png" alt="Access" className="h-4 w-4" />
+              <span>Access</span>
+            </button>
+            <button className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-700/50 hover:text-white transition-colors">
+              <img src="/mdi_cog.png" alt="System" className="h-4 w-4" />
+              <span>System</span>
+            </button>
+          </nav>
         </div>
         
         <div className="flex items-center space-x-4">
           {/* Online Users Avatars */}
-          <div className="flex items-center -space-x-2">
-            {/* Adam (Online) */}
+          <div className="flex items-center space-x-2">
+            {/* Carl (Online/Active) */}
             <div className="relative">
-              <div className="w-8 h-8 bg-gray-600 rounded-full border-2 border-[#101828] flex items-center justify-center">
-                <span className="text-xs font-semibold text-white">A</span>
+              <div className="w-10 h-10 bg-gray-600 rounded-full border-3 border-green-500 flex items-center justify-center">
+                <span className="text-sm font-semibold text-white">C</span>
               </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-[#101828]"></div>
             </div>
-            {/* Carl (Offline) */}
+            {/* Adam (Offline) */}
             <div className="relative">
-              <div className="w-8 h-8 bg-gray-600 rounded-full border-2 border-[#101828] opacity-60 flex items-center justify-center">
-                <span className="text-xs font-semibold text-white">C</span>
+              <div className="w-10 h-10 bg-gray-600 rounded-full border-2 border-[#101828] flex items-center justify-center opacity-50">
+                <span className="text-sm font-semibold text-gray-300">A</span>
               </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-red-500 rounded-full border-2 border-[#101828]"></div>
             </div>
           </div>
 
@@ -177,6 +203,14 @@ export default function TopBar({ onLogout, cameraCount }: TopBarProps) {
           </div>
         </div>
       </div>
+
+      {/* Shutdown PIN Modal */}
+      <PinModal
+        isOpen={showShutdownModal}
+        type="shutdown"
+        onSubmit={handleShutdownConfirm}
+        onCancel={() => setShowShutdownModal(false)}
+      />
 
     </>
   );
