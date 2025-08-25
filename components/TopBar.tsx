@@ -52,10 +52,10 @@ export default function TopBar({ cameraCount }: TopBarProps) {
   return (
     <>
       {/* Top Bar - Header */}
-      <div className="bg-[#101828] px-4 py-2 flex justify-between items-center">
+      <div className="bg-[#070F1F] px-4 py-2 flex justify-between items-center shadow-2xl">
         <div className="flex items-center space-x-8">
           {/* VIGILANCE Logo */}
-          <div className="flex items-center">
+          <div className="flex items-center cursor-pointer" onClick={() => document.documentElement.requestFullscreen()}>
             <img 
               src="/logoi.png" 
               alt="VIGILANCE" 
@@ -80,7 +80,7 @@ export default function TopBar({ cameraCount }: TopBarProps) {
           {/* Navigation Tabs */}
           <nav className="flex items-center space-x-1">
             <button className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-blue-500/20 text-white border border-blue-500/30">
-              <img src="/homename.png" alt="Home" className="h-4 w-4" />
+              <img src="/ic_baseline-home.png" alt="Home" className="h-5 w-5" />
               <span className="font-medium">Home</span>
             </button>
             <button className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-700/50 hover:text-white transition-colors">
@@ -125,6 +125,7 @@ export default function TopBar({ cameraCount }: TopBarProps) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
             </svg>
           </button>
+         
           
           {/* User Dropdown Section */}
           <div className="relative" ref={dropdownRef}>
@@ -133,15 +134,13 @@ export default function TopBar({ cameraCount }: TopBarProps) {
               className="flex items-center space-x-3 hover:bg-gray-700/50 p-2 rounded-lg transition-colors"
             >
               <div className="flex items-center space-x-1">
-                <h2 className="text-md font-semibold">Wander001 home</h2>
+                <h2 className="text-md font-semibold">CW001 home</h2>
                 <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 text-gray-400 transition-transform ${showUserDropdown ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
+                <img src="/homename.png" alt="Home" className="h-6 w-6" />
               </div>
             </button>
 
@@ -151,7 +150,7 @@ export default function TopBar({ cameraCount }: TopBarProps) {
                 <div className="py-1">
                   {/* Profile Section */}
                   <div className="px-4 py-3 border-b border-gray-600">
-                    <p className="text-sm font-medium text-white">Wander001 home</p>
+                    <p className="text-sm font-medium text-white">CW001 home</p>
                     <p className="text-xs text-gray-400">admin@vigilance.local</p>
                   </div>
                   

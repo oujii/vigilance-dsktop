@@ -63,17 +63,72 @@ export default function Sidebar() {
         <ExpandableMenu
           title="Cameras"
           icon={<Video className="h-5 w-5" />}
-          defaultExpanded={true}
+          defaultExpanded={false}
         >
           <div className="space-y-1">
             <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
               <Video className="h-4 w-4" />
-              <span className="text-sm">Köket</span>
+              <span className="text-sm">Kök</span>
               <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             </div>
             <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
               <Video className="h-4 w-4" />
-              <span className="text-sm">Entré</span>
+              <span className="text-sm">Vardagsrum 1</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Vardagsrum 2</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Master Bedroom</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Kontor</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Gästrum</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Klädkammare</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Trappa</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Hall</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Garage</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Brygga</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Terass</span>
+              <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+            </div>
+            <div className="flex items-center space-x-2 px-2 py-1 text-gray-300 hover:bg-gray-700/30 rounded cursor-pointer">
+              <Video className="h-4 w-4" />
+              <span className="text-sm">Kök 2</span>
               <div className="ml-auto w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             </div>
           </div>

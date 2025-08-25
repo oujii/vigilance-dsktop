@@ -97,7 +97,7 @@ export default function SurveillanceGrid({ cameras, onShutdown, gridType = '3x2'
       )}
 
       {/* Video Grid */}
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-2">
         <div className={`grid gap-2 h-full ${
           enlargedCamera 
             ? (gridType === '2x2' ? 'grid-cols-3 grid-rows-2' : 'grid-cols-4 grid-rows-3')

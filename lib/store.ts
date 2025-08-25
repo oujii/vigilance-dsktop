@@ -42,7 +42,7 @@ export const useAppStore = create<AppState>()(
         surveillanceCameras: {
           'control': ['1', '2', '3', '4', '5', '6'], // 6 cameras for control (3x2 grid)
           '1': ['7', '8', '9', '10'],                // 4 cameras for display 1 (2x2 grid)
-          '2': ['11', '12', '13', '14'],             // 4 cameras for display 2 (2x2 grid)
+          '2': ['11', '12', '13', '1'],              // 4 cameras for display 2 (2x2 grid)
         },
         cameraVideos: {},
 

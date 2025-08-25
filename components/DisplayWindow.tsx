@@ -44,13 +44,9 @@ export default function DisplayWindow({ displayId }: DisplayWindowProps) {
     displayCameraIds.includes(camera.id)
   );
 
-  const handleRestart = () => {
-    setPower('ON');
-  };
-
-  // Show restart screen when system is off
+  // Show black screen when system is off
   if (power === 'OFF') {
-    return <RestartScreen onRestart={handleRestart} />;
+    return <div className="h-screen bg-black"></div>;
   }
 
   // Show surveillance grid when system is on
