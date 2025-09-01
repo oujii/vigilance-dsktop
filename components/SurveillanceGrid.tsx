@@ -69,10 +69,10 @@ export default function SurveillanceGrid({ cameras, onShutdown, gridType = '3x2'
   const currentDate = new Date().toLocaleDateString('sv-SE');
 
   return (
-    <div className="h-screen bg-[#0a0a0a] text-white flex flex-col">
+    <div className={`bg-[#0a0a0a] text-white flex flex-col overflow-hidden ${showTopBar ? 'h-screen' : 'h-full'}`}>
       {/* Top Bar - System Header (only show if showTopBar is true) */}
       {showTopBar && (
-        <div className="bg-[#1a1a1a] px-6 py-3 flex justify-between items-center border-b border-gray-700">
+        <div className="bg-[#1a1a1a] px-6 py-3 flex justify-between items-center border-b border-gray-700 flex-shrink-0">
           <div className="flex items-center space-x-4">
             <h1 className="text-lg font-semibold text-blue-400">VIGILANCE SECURITY SYSTEM</h1>
             <div className="text-sm text-gray-400">
@@ -97,8 +97,8 @@ export default function SurveillanceGrid({ cameras, onShutdown, gridType = '3x2'
       )}
 
       {/* Video Grid */}
-      <div className="flex-1 p-2">
-        <div className={`grid gap-2 h-full ${
+      <div className="flex-1 p-1 min-h-0">
+        <div className={`grid gap-1 h-full ${
           enlargedCamera 
             ? (gridType === '2x2' ? 'grid-cols-3 grid-rows-2' : 'grid-cols-4 grid-rows-3')
             : (gridType === '2x2' ? 'grid-cols-2 grid-rows-2' : 'grid-cols-3 grid-rows-2')
@@ -135,7 +135,6 @@ export default function SurveillanceGrid({ cameras, onShutdown, gridType = '3x2'
                 {/* Camera Info Overlay */}
                 <div className="absolute top-2 left-2 bg-black/70 px-2 py-1 rounded text-xs">
                   <div className="text-white font-semibold">{camera.name}</div>
-                  <div className="text-gray-300">{camera.location}</div>
                 </div>
 
                 {/* Status Indicators */}

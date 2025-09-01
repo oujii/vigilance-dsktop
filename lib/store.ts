@@ -29,6 +29,7 @@ interface AppState {
   setCameraLayout: (displayId: string, cameraId: string | null) => void;
   setSurveillanceCameras: (displayId: string, cameraIds: string[]) => void;
   setCameraVideo: (cameraId: string, videoUrl: string) => void;
+  resetCameras: () => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -42,7 +43,7 @@ export const useAppStore = create<AppState>()(
         surveillanceCameras: {
           'control': ['1', '2', '3', '4', '5', '6'], // 6 cameras for control (3x2 grid)
           '1': ['7', '8', '9', '10'],                // 4 cameras for display 1 (2x2 grid)
-          '2': ['11', '12', '13', '1'],              // 4 cameras for display 2 (2x2 grid)
+          '2': ['11', '12', '13', '5'],              // 4 cameras for display 2
         },
         cameraVideos: {},
 
@@ -70,9 +71,13 @@ export const useAppStore = create<AppState>()(
               [cameraId]: videoUrl
             }
           })),
+        resetCameras: () =>
+          set(() => ({
+            cameraVideos: {}
+          })),
       }),
       {
-        name: 'vigilance-store', // localStorage key
+        name: 'vigilance-store-v2', // localStorage key
         partialize: (state) => ({
           // Only persist these fields
           power: state.power,

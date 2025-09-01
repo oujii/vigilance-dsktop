@@ -9,7 +9,7 @@ interface TopBarProps {
 }
 
 export default function TopBar({ cameraCount }: TopBarProps) {
-  const { setPower } = useAppStore();
+  const { setPower, resetCameras } = useAppStore();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showShutdownModal, setShowShutdownModal] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -91,7 +91,10 @@ export default function TopBar({ cameraCount }: TopBarProps) {
               <img src="/bxs_user.png" alt="Access" className="h-4 w-4" />
               <span>Access</span>
             </button>
-            <button className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-700/50 hover:text-white transition-colors">
+            <button 
+              onClick={resetCameras}
+              className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-700/50 hover:text-white transition-colors"
+            >
               <img src="/mdi_cog.png" alt="System" className="h-4 w-4" />
               <span>System</span>
             </button>

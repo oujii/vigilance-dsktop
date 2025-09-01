@@ -18,19 +18,19 @@ export default function ControlPage() {
 
   // Same camera data structure as DisplayWindow - matches the global allCameras
   const allCameras = [
-    { id: '1', name: 'CAM 01', location: 'Kök', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '2', name: 'CAM 02', location: 'Vardagsrum 1', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '3', name: 'CAM 03', location: 'Vardagsrum 2', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '4', name: 'CAM 04', location: 'Master Bedroom', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '5', name: 'CAM 05', location: 'Kontor', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '6', name: 'CAM 06', location: 'Gästrum', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '7', name: 'CAM 07', location: 'Klädkammare', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '8', name: 'CAM 08', location: 'Trappa', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '9', name: 'CAM 09', location: 'Hall', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '10', name: 'CAM 10', location: 'Garage', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '11', name: 'CAM 11', location: 'Brygga', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '12', name: 'CAM 12', location: 'Terass', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
-    { id: '13', name: 'CAM 13', location: 'Kök 2', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '1', name: 'ADC6-10-M022', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '2', name: 'BDH4-15-S081', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '3', name: 'CDK2-08-X104', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '4', name: 'DFL7-22-Y045', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '5', name: 'EGM9-31-Z067', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '6', name: 'FHN3-17-A129', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '7', name: 'GJP5-26-B088', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '8', name: 'HKQ8-13-C156', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '9', name: 'ILR1-29-D093', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '10', name: 'JMS4-18-E174', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '11', name: 'KNT6-25-F012', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '12', name: 'LOU9-14-G138', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
+    { id: '13', name: 'MPV2-33-H076', location: '', videoSrc: '/default-placeholder.mp4', timestamp: '14:32:15' },
   ];
 
   // Filter cameras for this display (exactly like DisplayWindow)
@@ -48,19 +48,19 @@ export default function ControlPage() {
   }
 
   return (
-    <div className="bg-[#101828] text-white min-h-screen flex flex-col">
+    <div className="bg-[#101828] text-white h-screen flex flex-col overflow-hidden">
       {/* Top Bar */}
       <TopBar 
         cameraCount={controlCameras.length}
       />
       
       {/* Main Content */}
-      <div className="flex-1 flex">
+      <div className="flex-1 flex min-h-0">
         {/* Sidebar Navigation */}
         <Sidebar />
 
         {/* Main Surveillance Display */}
-        <main className="flex-1">
+        <main className="flex-1 min-h-0">
           <SurveillanceGrid 
             cameras={controlCameras}
             gridType="3x2"
