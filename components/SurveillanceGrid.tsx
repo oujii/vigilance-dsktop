@@ -129,7 +129,7 @@ export default function SurveillanceGrid({ cameras, onShutdown, gridType = '3x2'
                     src={cameraVideos[camera.id]}
                   />
                 ) : (
-                  <div className="w-full h-full bg-[#808080]"></div>
+                  <div className="w-full h-full bg-black"></div>
                 )}
 
                 {/* Camera Info Overlay */}

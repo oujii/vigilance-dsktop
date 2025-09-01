@@ -46,7 +46,7 @@ export default function CameraGrid({ cameras }: CameraGridProps) {
           onClick={() => handleCameraSelect(camera.id)}
         >
           {/* Placeholder image - will be replaced with real video feeds */}
-          <div className={`w-full h-64 bg-gray-700 object-cover transition-opacity flex items-center justify-center ${
+          <div className={`w-full h-64 bg-black object-cover transition-opacity flex items-center justify-center ${
             camera.isActive ? 'opacity-100' : 'opacity-50'
           }`}>
             <div className="text-center">

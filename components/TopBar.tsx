@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useAppStore } from '@/lib/store';
+import ShutdownModal from './ShutdownModal';
 import PinModal from './PinModal';
 
 interface TopBarProps {
@@ -9,9 +10,11 @@ interface TopBarProps {
 }
 
 export default function TopBar({ cameraCount }: TopBarProps) {
-  const { setPower, resetCameras } = useAppStore();
+  const { setPower, setIsRestarting, resetCameras } = useAppStore();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const [showShutdownModal, setShowShutdownModal] = useState(false);
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [shutdownType, setShutdownType] = useState<'shutdown' | 'restart'>('shutdown');
   const dropdownRef = useRef<HTMLDivElement>(null);
   
   const currentTime = new Date().toLocaleTimeString('sv-SE', { 
@@ -44,9 +47,32 @@ export default function TopBar({ cameraCount }: TopBarProps) {
     setShowShutdownModal(true);
   };
 
-  const handleShutdownConfirm = () => {
+  const handleShutdown = () => {
     setShowShutdownModal(false);
+    setShutdownType('shutdown');
+    setShowPinModal(true);
+  };
+
+  const handleLogoutDirect = () => {
+    setShowShutdownModal(false);
+    setShutdownType('shutdown');
+    setShowPinModal(true);
+  };
+
+  const handleRestart = () => {
+    setShowShutdownModal(false);
+    setShutdownType('restart');
+    setShowPinModal(true);
+  };
+
+  const handlePinConfirm = () => {
+    setShowPinModal(false);
     setPower('OFF');
+    
+    // If restart, set restart flag immediately so PowerOffScreen knows to auto-boot
+    if (shutdownType === 'restart') {
+      setIsRestarting(true);
+    }
   };
 
   return (
@@ -206,12 +232,21 @@ export default function TopBar({ cameraCount }: TopBarProps) {
         </div>
       </div>
 
-      {/* Shutdown PIN Modal */}
-      <PinModal
+      {/* Shutdown Options Modal */}
+      <ShutdownModal
         isOpen={showShutdownModal}
-        type="shutdown"
-        onSubmit={handleShutdownConfirm}
+        onShutdown={handleShutdown}
+        onLogout={handleLogoutDirect}
+        onRestart={handleRestart}
         onCancel={() => setShowShutdownModal(false)}
+      />
+
+      {/* PIN Modal */}
+      <PinModal
+        isOpen={showPinModal}
+        type="shutdown"
+        onSubmit={handlePinConfirm}
+        onCancel={() => setShowPinModal(false)}
       />
 
     </>

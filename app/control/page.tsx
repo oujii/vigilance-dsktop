@@ -1,17 +1,22 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useAppStore } from '@/lib/store';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import Sidebar from '@/components/Sidebar';
 import SurveillanceGrid from '@/components/SurveillanceGrid';
 import TopBar from '@/components/TopBar';
-import RestartScreen from '@/components/RestartScreen';
+import PowerOffScreen from '@/components/PowerOffScreen';
+import LoadingScreen from '@/components/LoadingScreen';
 
 export default function ControlPage() {
-  const { power, surveillanceCameras, setPower } = useAppStore();
+  const { power, isRestarting, surveillanceCameras, setPower, setIsRestarting } = useAppStore();
+  const [isLoading, setIsLoading] = useState(false);
   
   // Enable keyboard shortcuts
   useKeyboardShortcuts();
+
+  // No longer needed - PowerOffScreen handles auto-boot timing
 
   // Get cameras for this display's surveillance grid (exactly like DisplayWindow)
   const controlCameraIds = surveillanceCameras['control'] || ['1', '2', '3', '4', '5', '6'];
@@ -39,12 +44,23 @@ export default function ControlPage() {
   );
 
   const handleRestart = () => {
+    setIsLoading(true);
+  };
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+    setIsRestarting(false);
     setPower('ON');
   };
 
-  // Show restart screen when system is off
+  // Show loading screen when starting up
+  if (isLoading) {
+    return <LoadingScreen onComplete={handleLoadingComplete} />;
+  }
+
+  // Show power off screen when system is off
   if (power === 'OFF') {
-    return <RestartScreen onRestart={handleRestart} />;
+    return <PowerOffScreen onPowerOn={handleRestart} isRestarting={isRestarting} />;
   }
 
   return (

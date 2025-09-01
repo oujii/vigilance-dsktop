@@ -6,6 +6,7 @@ import { persist, subscribeWithSelector } from 'zustand/middleware';
 interface AppState {
   // System state
   power: 'ON' | 'OFF';
+  isRestarting: boolean;
   selectedCamera: string | null;
   
   // Camera layout state for customizable grid
@@ -25,6 +26,7 @@ interface AppState {
   
   // Actions
   setPower: (power: 'ON' | 'OFF') => void;
+  setIsRestarting: (isRestarting: boolean) => void;
   setSelectedCamera: (camera: string | null) => void;
   setCameraLayout: (displayId: string, cameraId: string | null) => void;
   setSurveillanceCameras: (displayId: string, cameraIds: string[]) => void;
@@ -38,6 +40,7 @@ export const useAppStore = create<AppState>()(
       (set) => ({
         // Initial state
         power: 'ON',
+        isRestarting: false,
         selectedCamera: null,
         cameraLayout: {},
         surveillanceCameras: {
@@ -49,6 +52,7 @@ export const useAppStore = create<AppState>()(
 
         // Actions
         setPower: (power) => set({ power }),
+        setIsRestarting: (isRestarting) => set({ isRestarting }),
         setSelectedCamera: (camera) => set({ selectedCamera: camera }),
         setCameraLayout: (displayId, cameraId) => 
           set((state) => ({

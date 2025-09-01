@@ -1,0 +1,46 @@
+MOCK KAMERANAMN - VIGILANCE DESKTOP
+
+== Alphanumeriska Kamerakoder (Huvudsystem) ==
+ADC6-10-M022
+BDH4-15-S081
+CDK2-08-X104
+DFL7-22-Y045
+EGM9-31-Z067
+FHN3-17-A129
+GJP5-26-B088
+HKQ8-13-C156
+ILR1-29-D093
+JMS4-18-E174
+KNT6-25-F012
+LOU9-14-G138
+MPV2-33-H076
+
+== Exempel HTML Kameror (Beskrivande) ==
+Garage side S3 Pro 2
+Back yard S3 Pro 1
+Lobby Cam 4
+Rooftop East
+Parking Lot A1
+Server Room
+
+== Kamera ID Referenser ==
+Camera 1
+Camera 2
+Camera 3
+Camera 4
+Camera 5
+Camera 6
+Camera 7
+Camera 8
+Camera 9
+Camera 10
+Camera 11
+Camera 12
+Camera 13
+
+== Ytterligare Platser (från Sidebar) ==
+Master Bedroom
+Garage
+
+Totalt: 13 aktiva kameror i huvudsystemet
+Format: [3 bokstäver][1 siffra]-[2 siffror]-[1 bokstav][3 siffror]

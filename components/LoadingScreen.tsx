@@ -11,34 +11,36 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
   const [currentStep, setCurrentStep] = useState('Initializing system...');
 
   const steps = [
-    'Initializing system...',
-    'Connecting to cameras...',
-    'Loading security protocols...',
-    'Establishing network connections...',
-    'Validating user permissions...',
-    'Starting surveillance engine...',
-    'System ready'
+    { text: 'Initializing system...', duration: 700 },
+    { text: 'Connecting to cameras...', duration: 1800 },
+    { text: 'Loading security protocols...', duration: 1200 },
+    { text: 'Establishing network connections...', duration: 2300 },
+    { text: 'Validating user permissions...', duration: 800 },
+    { text: 'Starting surveillance engine...', duration: 2700 },
+    { text: 'System ready', duration: 500 }
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        const newProgress = prev + 2;
-        
-        // Update step based on progress
-        const stepIndex = Math.floor((newProgress / 100) * (steps.length - 1));
-        setCurrentStep(steps[stepIndex] || steps[steps.length - 1]);
-        
-        if (newProgress >= 100) {
-          clearInterval(interval);
-          setTimeout(() => onComplete(), 500);
-          return 100;
-        }
-        return newProgress;
-      });
-    }, 100);
+    let currentStepIndex = 0;
+    setCurrentStep(steps[0].text);
 
-    return () => clearInterval(interval);
+    const runStep = () => {
+      if (currentStepIndex < steps.length - 1) {
+        setTimeout(() => {
+          currentStepIndex++;
+          setCurrentStep(steps[currentStepIndex].text);
+          
+          if (currentStepIndex === steps.length - 1) {
+            // Last step - trigger completion
+            setTimeout(() => onComplete(), steps[currentStepIndex].duration);
+          } else {
+            runStep();
+          }
+        }, steps[currentStepIndex].duration);
+      }
+    };
+
+    runStep();
   }, [onComplete]);
 
   return (
@@ -79,16 +81,6 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
           </div>
         </div>
 
-        {/* Loading Dots */}
-        <div className="flex justify-center space-x-2">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"
-              style={{ animationDelay: `${i * 0.3}s` }}
-            ></div>
-          ))}
-        </div>
       </div>
     </div>
   );
