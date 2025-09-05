@@ -245,6 +245,7 @@ export default function TopBar({ cameraCount }: TopBarProps) {
       <PinModal
         isOpen={showPinModal}
         type="shutdown"
+        actionType={shutdownType}
         onSubmit={handlePinConfirm}
         onCancel={() => setShowPinModal(false)}
       />

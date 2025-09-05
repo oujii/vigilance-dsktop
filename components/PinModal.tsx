@@ -6,11 +6,12 @@ import KeyboardPinInput from './KeyboardPinInput';
 interface PinModalProps {
   isOpen: boolean;
   type: 'shutdown' | 'startup';
+  actionType?: 'shutdown' | 'restart';
   onSubmit: () => void;
   onCancel?: () => void;
 }
 
-export default function PinModal({ isOpen, type, onSubmit, onCancel }: PinModalProps) {
+export default function PinModal({ isOpen, type, actionType = 'shutdown', onSubmit, onCancel }: PinModalProps) {
   const [showWallpaper, setShowWallpaper] = useState(false);
   const [showBlackScreen, setShowBlackScreen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -23,7 +24,7 @@ export default function PinModal({ isOpen, type, onSubmit, onCancel }: PinModalP
       // Show processing state first
       setIsProcessing(true);
       
-      // After 1.5 seconds, proceed with wallpaper
+      // After 3.5 seconds, proceed with wallpaper
       setTimeout(() => {
         setIsProcessing(false);
         setShowWallpaper(true);
@@ -36,7 +37,7 @@ export default function PinModal({ isOpen, type, onSubmit, onCancel }: PinModalP
             onSubmit();
           }, 2000);
         }, 3000);
-      }, 1500);
+      }, 3500);
     } else {
       // For startup: show processing then proceed
       setIsProcessing(true);
@@ -66,10 +67,10 @@ export default function PinModal({ isOpen, type, onSubmit, onCancel }: PinModalP
             <div className="w-12 h-12 border-4 border-gray-600 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
           </div>
           <div className="text-white text-lg font-medium">
-            Processing...
+            {actionType === 'restart' ? 'Restarting surveillance system...' : 'Shutting down surveillance system...'}
           </div>
           <div className="text-gray-400 text-sm mt-2">
-            Verifying credentials
+            {actionType === 'restart' ? 'Preparing system reboot' : 'Terminating security monitors'}
           </div>
         </div>
       </div>
